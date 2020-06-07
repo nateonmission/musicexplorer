@@ -26,33 +26,64 @@ namespace musicExplorer
             var results = new HashSet<Song>();
             using (var reader = new StreamReader(fileName))
             {
+                reader.ReadLine();
+                reader.ReadLine();
+
                 string line = "";
-                reader.ReadLine();
-                reader.ReadLine();
+                string[] values = line.Split(',');
 
                 Song oldSong = new Song();
-                oldSong.SongID = "";
-                oldSong.SongTitle = "";
-                oldSong.Performer = "";
+                oldSong.SongID = null;
 
+                int parseInt;
+                List<int> peakList = new List<int>();
+                List<int> weeksList = new List<int>();
+
+                
                 while ((line = reader.ReadLine()) != null)
                 {
-                    string[] values = line.Split(',');
-                    if (!(oldSong.SongID == values[5]))
+                    Song song = new Song();
+
+                    while (oldSong.SongID == values[5])
                     {
-                        var song = new Song();
+                        parseInt = 101;
+
                         song.SongID = values[5];
                         song.SongTitle = values[3];
                         song.Performer = values[4];
-                        results.Add(song);
+                        
+                        if (values[8] == "")
+                        {
+                            continue;
+                        }
+                        else if (int.TryParse(values[8], out parseInt))
+                        {
+                            int peak = parseInt;
+                            peakList.Add(peak);
+                        }
+
+                        if (values[9] == "")
+                        {
+                            continue;
+                        }
+                        else if (int.TryParse(values[9], out parseInt))
+                        {
+                            int weeks = parseInt;
+                            peakList.Add(weeks);
+                        }
                         oldSong = song;
                     }
+                    
+                    
+                    song.Peak = peakList.Max();
+                    song.WeeksOnChart = weeksList.Max();
 
+                    results.Add(song);
+
+                    
                 }
-
             }
             return results;
-
         }
     }
 }
