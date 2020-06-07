@@ -30,53 +30,99 @@ namespace musicExplorer
                 reader.ReadLine();
 
                 string line = "";
-                string[] values = line.Split(',');
+                
 
                 Song oldSong = new Song();
                 oldSong.SongID = null;
 
+                Song song = new Song();
+
                 int parseInt;
+                int parseInt2;
                 List<int> peakList = new List<int>();
                 List<int> weeksList = new List<int>();
+
 
                 
                 while ((line = reader.ReadLine()) != null)
                 {
-                    Song song = new Song();
+                    string[] values = line.Split(',');
 
-                    while (oldSong.SongID == values[5])
+
+
+                    song.SongID = values[5];
+                    song.SongTitle = values[3];
+                    song.Performer = values[4];
+                    if (int.TryParse(values[8], out parseInt))
                     {
-                        parseInt = 101;
-
-                        song.SongID = values[5];
-                        song.SongTitle = values[3];
-                        song.Performer = values[4];
-                        
-                        if (values[8] == "")
-                        {
-                            continue;
-                        }
-                        else if (int.TryParse(values[8], out parseInt))
-                        {
-                            int peak = parseInt;
-                            peakList.Add(peak);
-                        }
-
-                        if (values[9] == "")
-                        {
-                            continue;
-                        }
-                        else if (int.TryParse(values[9], out parseInt))
-                        {
-                            int weeks = parseInt;
-                            peakList.Add(weeks);
-                        }
-                        oldSong = song;
+                        int peak = parseInt;
+                        song.Peak = peak;
+                        peakList.Add(peak);
                     }
-                    
-                    
-                    song.Peak = peakList.Max();
-                    song.WeeksOnChart = weeksList.Max();
+                    if (int.TryParse(values[9], out parseInt2))
+                    {
+                        int weeks = parseInt;
+                        song.WeeksOnChart = weeks;
+                        weeksList.Add(weeks);
+                    }
+
+
+                    //if (oldSong.SongID == null || oldSong.SongID != values[5])
+                    //{
+
+                    //    song.SongID = values[5];
+                    //    song.SongTitle = values[3];
+                    //    song.Performer = values[4];
+
+                    //    if (values[8] == "")
+                    //    {
+                    //        peakList.Add(101);
+                    //    }
+                    //    else if (int.TryParse(values[8], out parseInt))
+                    //    {
+                    //        int peak = parseInt;
+                    //        peakList.Add(peak);
+                    //    }
+
+                    //    if (values[9] == "")
+                    //    {
+                    //        weeksList.Add(0);
+                    //    }
+                    //    else if (int.TryParse(values[9], out parseInt))
+                    //    {
+                    //        int weeks = parseInt;
+                    //        peakList.Add(weeks);
+                    //    }
+                    //    oldSong = song;
+                    //}
+
+                    //else if (oldSong.SongID == values[5])
+                    //{
+
+                    //    if (values[8] == "")
+                    //    {
+                    //        peakList.Add(101);
+                    //    }
+                    //    else if (int.TryParse(values[8], out parseInt))
+                    //    {
+                    //        int peak = parseInt;
+                    //        peakList.Add(peak);
+                    //    }
+
+                    //    if (values[9] == "")
+                    //    {
+                    //        weeksList.Add(0);
+                    //    }
+                    //    else if (int.TryParse(values[9], out parseInt))
+                    //    {
+                    //        int weeks = parseInt;
+                    //        peakList.Add(weeks);
+                    //    }
+                    //}
+
+
+                    //song.Peak = peakList.Max();
+                    //song.WeeksOnChart = weeksList.Max();
 
                     results.Add(song);
 
