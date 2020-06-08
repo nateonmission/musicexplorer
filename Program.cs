@@ -71,6 +71,13 @@ namespace musicExplorer
             song.SongID = values[5];
             song.SongTitle = values[3];
             song.Performer = values[4];
+
+            DateTime parseDate = new DateTime();
+            if (DateTime.TryParse(values[1], out parseDate))
+            {
+                song.LastWeekID = parseDate;
+            }
+
             if (int.TryParse(values[8], out parseInt))
             {
                 song.Peak = parseInt;
@@ -79,6 +86,7 @@ namespace musicExplorer
             {
                 song.WeeksOnChart = parseInt;
             }
+            song.FirstWeekID = song.LastWeekID.AddDays(-((song.WeeksOnChart - 1) * 7));
 
             return song;
         }
