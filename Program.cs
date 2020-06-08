@@ -19,8 +19,6 @@ namespace musicExplorer
         }
 
 
-
-
         public static HashSet<Song> ReadSongs(string fileName)
         {
             var results = new HashSet<Song>();
@@ -48,7 +46,6 @@ namespace musicExplorer
 
                     if (sameSong)
                     {
-
                         prevSong = newSong;
                     }
                     else
